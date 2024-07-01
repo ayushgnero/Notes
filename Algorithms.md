@@ -1,0 +1,117 @@
+# The Role of Algorithms in Computing
+
+What are algorithms? Why is the study of Algorithms worthwhile? What is the role of algorithms relative to other technologies used in Comptures?
+
+## Algorithm
+Algoriths is a sequence of computational steps that transform the input to an output or it is a step-by-step procedure for solving a problem.
+
+## Time Complexity
+Time Complexity measures the amount of time an algorithm takes to run as a function of the input size
+
+### Big O Notation
+The Big O Notation is used to describe the worst case scenario for an algorithm's running time.
+
+### How to calculate Time Complexity
+* **Identify the Basic Operation:** Identify the fundamental operation that dominates the execution time of the algorithm. This could be:
+* Assignments
+* Comparisons
+* Arithmetic Operations
+* Loop Iterations
+* Function Calls
+
+* **Analyze Loop Structures:** 
+    1. **Single Loops:** for a loop that runs `n` times, the time complexity is `O(n)`,
+    ```python
+    for i in range (n):
+        # Constant time operation
+    ```
+    2. **Nested Loops:** For nested loops, multiply the time complexity of each loop.
+
+    ```python
+    for i in range(n):
+        for j in range(n):
+            # Constant time operation
+    # Time complexity in O (n*n) = O(n^2)
+    ```
+    3. **Consecutive Statements:** Add the time complexities of consecutive statements. However, in Big O notation, we drop the lower-order terms.
+    ```python
+    for i in range(n):      # O(n)
+        # Constant time operation
+    for j in range(m):      # O(m)
+        # Constant time operation
+    # Overall time complexity is O(n) + O(m) = O(n + m)
+    ```
+    if `n` and `m` are of the same order, we simplify to `O(n)`.
+
+    4. **Analyze Conditional Statements:**
+    For conditional statements, take the time complexity of the branch with the highest complexity.
+
+    ```python
+    if condition:
+        # O(n)
+    else:
+        # O(1)
+    # TIme Compleity is O(n)
+    ```
+
+    5. **Recursive Algorithms:** for recursive algorithms, use the recurrence relation to express the time complexity.
+
+    **Example:** Binary Search
+
+    ```python
+    def binary_search(arr,target):
+        if len(arr) == 0:
+            return False
+        mid = len(arr) // 2
+        if arr[mid] == target:
+            return True
+        elif arr[mid] < target:
+            return binary_search(arr[mid + 1:], target)
+        else:
+            return binary_search(arrp[:mid], target)
+    ```
+    Binary Search splits the array into two halves each time. The recurrence relation is:
+    $$
+    T(n)=T(n/2)+O(1)T(n)=T(n/2)+O(1)
+    $$
+
+    Solving this recurrence gives:
+    $$
+    T(n) = O(log n)
+    $$
+
+    **Example:** Merge Sort
+    ```python
+    def merge_sort(arr):
+        if len(arr) <= 1:
+            return arr
+        mid = len(arr) // 2
+        left = merge_sort(arr[:mid])
+        right = merge_sort(arr[mid:])
+        return merge(left, right) 
+    ```
+
+    Merge sort divides the array into two halves and then merges them. The recurrence relation is:
+    $$
+    T(n) = 2T(n/2) + O(n)
+    $$
+    Solving this recurrence gives:
+    $$
+    T(n) = O(n log n)
+    $$
+
+    6. **Use the Master Theorem for Recurrence Relations:** 
+    The Master Theorem provides a shortcut for solving recurrences of the form:
+    $$
+    T(n) = aT(n/b) + f(n)
+    $$
+
+    Where:
+    * $a$ is the number of subproblems in the recursion.
+    * $n/b$ is the size of each subproblem.
+    * $f(n)$ is the cost outside the recursive calls.
+
+    Three cases for the Master Theorem:
+    1. if $f(n) = O(n^c)$ and $c<log_{b}a$, then $T(n)=O(n^{log_{b}a})$.
+    2. if $f(n) = O(n^{log_{b}a})$, then $T(n)=O(n^{log_{b}a}{log n})$.
+    3. if $f(n) = O(n^c)$ and $c>log_{b}a$, then $T(n)=O(f(n))$.
